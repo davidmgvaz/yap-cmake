@@ -1,0 +1,14 @@
+
+This directory includes programs that are distributed under the GNU
+LGPL. We would like to thank the authors of the packages and the
+developers of the ciao and swi-prolog systems for their help and
+kindness in supporting us in distributing this software with YAP.
+
+The packages we include:
+
+The Pillow web library versio 1.1 developed by the CLIP group. 
+
+SWI-Prolog's library utilities, developed by Jan Wielemaker and others.
+
+
+

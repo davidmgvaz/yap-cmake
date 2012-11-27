@@ -1,0 +1,33 @@
+This directory contains the code of the cplint suite
+All the code in this directory is distributed under the terms of the 
+The Artistic License 2.0, see the file Artistic.
+
+COMPILATION:
+This package requires CUDD
+You can download CUDD from http://vlsi.colorado.edu/~fabio/CUDD/ 
+
+INSTALLATION:
+Compile CUDD:
+	1) downlad cudd-2.4.2.tar.gz
+	2) decompress it
+	3) cd cudd-2.4.2
+	4) check makefile options
+	5) make
+
+Installation of cplint:
+When compiling Yap, use
+	configure --enable-cplint=DIR
+Under Windows, you have to use cygwin (CUDD does not compile under MinGW), so
+	configure --enable-cplint --enable-cygwin=DIR
+where DIR is the directory where you compiled CUDD 
+
+
+FEEDBACK:
+
+Send feedback to:
+
+Fabrizio Riguzzi
+University of Ferrara 
+Dept. of Engineering
+fabrizio.riguzzi@unife.it
+http://www.ing.unife.it/Docenti/FabrizioRiguzzi/

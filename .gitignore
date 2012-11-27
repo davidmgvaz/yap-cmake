@@ -1,0 +1,13 @@
+*~
+*.itf
+*.po
+*.qlf
+*.xwam
+*.wam
+*.ma
+*.s
+*.o
+*.so
+*.dylib
+docs/yap.info*
+.build

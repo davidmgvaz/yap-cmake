@@ -1,0 +1,10 @@
+add_subdirectory(CLPBN)
+add_subdirectory(ProbLog)
+add_subdirectory(bdd)
+add_subdirectory(cplint)
+add_subdirectory(meld)
+add_subdirectory(prism/)
+add_subdirectory(pyswip)
+add_subdirectory(swi-minisat2)
+add_subdirectory(xml)
+

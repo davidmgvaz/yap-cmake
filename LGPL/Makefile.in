@@ -1,0 +1,59 @@
+#
+# default base directory for YAP installation
+#
+ROOTDIR = @prefix@
+#
+# where the binary should be
+#
+BINDIR = $(ROOTDIR)/bin
+#
+# where YAP should look for binary libraries
+#
+LIBDIR=@libdir@/Yap
+#
+# where YAP should look for architecture-independent Prolog libraries
+#
+SHAREDIR=$(ROOTDIR)/share
+#
+#
+# You shouldn't need to change what follows.
+#
+INSTALL=@INSTALL@
+INSTALL_DATA=@INSTALL_DATA@
+INSTALL_PROGRAM=@INSTALL_PROGRAM@
+srcdir=@srcdir@
+YAP_EXTRAS=@YAP_EXTRAS@ 
+
+PROGRAMS= $(srcdir)/base64.pl \
+	$(srcdir)/broadcast.pl \
+	$(srcdir)/date.pl \
+	$(srcdir)/debug.pl \
+	$(srcdir)/main.pl \
+	$(srcdir)/maplist.pl \
+	$(srcdir)/menu.pl \
+	$(srcdir)/nb_set.pl \
+	$(srcdir)/operators.pl \
+	$(srcdir)/option.pl \
+	$(srcdir)/pairs.pl \
+	$(srcdir)/predicate_options.pl \
+	$(srcdir)/predopts.pl \
+	$(srcdir)/prolog_clause.pl \
+	$(srcdir)/prolog_colour.pl \
+	$(srcdir)/prolog_source.pl \
+	$(srcdir)/prolog_xref.pl \
+	$(srcdir)/quintus.pl \
+	$(srcdir)/readutil.pl \
+	$(srcdir)/record.pl \
+	$(srcdir)/settings.pl \
+	$(srcdir)/shlib.pl \
+	$(srcdir)/thread_pool.pl \
+	$(srcdir)/url.pl \
+	$(srcdir)/utf8.pl \
+	$(srcdir)/win_menu.pl \
+	$(srcdir)/www_browser.pl
+
+
+install: $(PROGRAMS)
+	mkdir -p $(DESTDIR)$(SHAREDIR)/Yap
+	for p in $(PROGRAMS); do $(INSTALL_DATA) $$p $(DESTDIR)$(SHAREDIR)/Yap; done
+

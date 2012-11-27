@@ -1,0 +1,71 @@
+################################################################
+# Shared makefile for packages.
+################################################################
+
+# This file must provide the following macros:
+#
+#   * PLLIBDIR
+#   Base directory holding the Prolog library.  Some packages
+#   may create subdirectories.
+#   * SOLIBDIR
+#   Directory holding shared objects/DLLs for the target architecture.
+#   * PKGDOCDIR
+#   Directory for storing the documentation.  Packages typically
+#   create subdirectories
+#   * PKGEXDIR
+#   Directory where a package stores example code.  Packages typically
+#   create subdirectories
+#   * SO
+#   Extension used for shared objects.  E.g., .so, .dylib, .dll, ...
+
+PLBASE=@prefix@
+PLARCH=@ARCH@
+PLINCL=$(PLBASE)/include
+PLLIBDIR=$(PLBASE)/share/Yap
+SOLIBDIR=@libdir@/Yap
+PKGDOCDIR=$(PLBASE)/share/doc/Yap/packages
+PKGEXDIR=$(PLBASE)/share/doc/Yap/packages/examples
+XPCEBASE=$(PLBASE)/xpce
+
+#
+# YAP internal stuff
+#
+ROOTDIR = $(prefix)
+EROOTDIR = @exec_prefix@
+BINDIR = $(EROOTDIR)/bin
+LIBDIR=@libdir@
+YAPLIBDIR=@libdir@/Yap
+SHAREDIR=$(ROOTDIR)/share/Yap
+abs_top_builddir=@abs_top_builddir@
+PL=@INSTALL_ENV@ $(DESTDIR)$(BINDIR)/yap $(DESTDIR)$(YAPLIBDIR)/startup.yss
+
+CC=@CC@
+LD=@SHLIB_LD@
+SO=@SO@
+COFLAGS=$(YAP_EXTRAS) $(DEFS) -D_YAP_NOT_INSTALLED_=1 -I$(srcdir) -I../.. -I$(srcdir)/../../include -I$(srcdir)/../../os @CPPFLAGS@
+CWFLAGS=
+CMFLAGS=@SHLIB_CFLAGS@ 
+CIFLAGS=
+CFLAGS=$(COFLAGS) $(CWFLAGS) $(CMFLAGS) $(CIFLAGS) $(PKGCFLAGS) @DEFS@
+
+LDSOFLAGS=@LDFLAGS@
+LDFLAGS=$(PKGLDFLAGS)
+
+LIBPLEMBED=@EXTRA_LIBS_FOR_SWIDLLS@
+LIBPLSO=@EXTRA_LIBS_FOR_SWIDLLS@
+
+MKINDEX=(cd $(srcdir) ; $(PL) -f none -g make -t halt)
+
+.txt.tex:
+	$(PUBLICPL)  -L $(SHAREDIR)/doc_latex -g "doc_latex('$*.txt','$*.tex',[stand_alone(false)]),halt" -t "halt(1)"
+
+
+PUBLICPL=$(PL)
+PLTOTEX=$(PUBLICPL) -q -l $(srcdir)/pltotex -g pltotex --
+
+#
+# find out how to generate .o files from $(scrdir)
+#
+%.o: $(srcdir)/%.c
+		$(CC) -c $(CFLAGS) $< -o $@
+

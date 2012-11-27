@@ -1,0 +1,121 @@
+6.0
+o Rogério Salvini's report
+o Fix meta-commas
+o Document CLPBN
+o Fix meta-call conjunction
+o exo-emulation.
+o EMACS interface.
+o talk to Fabrizio
+o upgrade save/restore
+o R Interface
+
+5.1.4
+
+
+
+BEFORE 4.4:
+- mixed attributes and delays.
+- write infinite terms
+- fix restore when code is moved around.
+- document new interface functions.
+- mask when installing.
+- reports from Nicos.
+- fix ensure_loaded/1.
+
+STK:
+- move architecture #ifdef's out of C files.
+- collapse windows and POSIX makefile recipes.
+- inline c_interface functions (static #included?)
+- look for a system regexp library before using the one in Yap.
+- see why tag2.pl is not compiling.
+- make docs/Makefile configurable.
+- break up yap.tex.
+- start devel.tex.
+- should sigactions be executed when Yap is waiting at the prompt?
+- see if on_signal/3 works through the C interface as well.
+- current_signal/3 does not know the SigId.
+- see how MPI libraries interact with YAP's signal handling.
+- atomic (as opposed or to numerical) tags (and communicators).
+- configure.in:236: check for mpicc in the user's prefix, if any
+ 
+TO CHECK:
+- bad register allocation for a(X,Y) :- X is Y+2.3 ?
+
+TABLING
+- pass all tabling tests from Kostis and Bart paper
+- handle floats, long ints and friends in tables.
+- backtracking over mutable and tabling does not work (ai_tests).
+
+PARALLELISM
+- copying: Fix stack copying after new stack.
+- SBA: fix constraint and unification.
+- IAP.
+
+AFTER 4.4(?)
+- improve debugger functionality
+- change compilation order for arguments
+- fix code for arithmetic
+- large memory configurations on 32 bit machines (3GB).
+- big data-bases
+- CLP(FD)
+- garbage collector cleans up clauses and logical update DB.
+- atom garbage collector.
+- lpdoc.
+- incremental garbage collector.
+- threads.
+
+DONE:
+- compilation of bignums.
+- expansion in the middle of compilation.
+- garbage collect multiple assignment variables properly.
+- read inf, nan, improve print_message.
+- Too large term in copy_term.
+- block.
+- include Stasinos patches for gmp configuration and documentation.
+- debug new code for delays
+- debug new code for attributes.
+- bug in CHR, run3, deussen1(X).
+- functor
+- check how terms are written by debugger
+- tabling garbage collector.
+- port to HP-UX (4.3.15)
+- port to Alpha (4.3.15)
+- fix trail overflow in gc
+- fix opt.mavar.h trouble
+- fix [] lookup
+- fix documentation complaint
+- fix overflow in tab_fib
+- fix rpm build
+- build problems with cygwin 1.1.7?
+- Trail Overflow in WIN32.
+- save/restore for DB
+- Ashwin bug on storing floats as head of db term.
+- save/restore for arrays.
+- save/restore for arithmetic.
+- fix aliases, user error, etc.
+- set user_input, user_output, and user_error
+- include Mandrake makefiles
+- system enters loop if predicate exported by module is not defined. 
+- copying garbage collector: implemented hybrid
+- dif example in Manual.
+- initial port to OS_X
+- listing (Steve Moyle).
+- logtalk.
+- fix bugs from Nicos.
+- remove pl/nfr.yap and misc/yap.spec from CVS.
+- deterministic trail entries for multi-assignment variables.
+- weird going ons with prompt and readline
+- check library(random)
+- document system(library)
+- interrupt handling in WIN32
+- ^C can break code.
+- system library
+- library(system) for WIN32
+- timestamps on files.
+- add more precision when outputting floats.
+- make statistics/0 better looking.
+- fix Yap under Emacs/WIN32
+- warnings in documentation file.
+- make gc work after mutable var changes (done)
+- knap-sack (done)
+- Yap core dumps under simple configure/make in WIN32

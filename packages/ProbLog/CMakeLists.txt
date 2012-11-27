@@ -1,0 +1,2 @@
+add_subdirectory(simplecudd)
+add_subdirectory(simplecudd_lfi)

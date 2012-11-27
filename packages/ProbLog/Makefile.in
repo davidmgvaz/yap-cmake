@@ -1,0 +1,99 @@
+#
+# default base directory for YAP installation
+#
+ROOTDIR = @prefix@
+#
+# where the binary should be
+#
+BINDIR = $(ROOTDIR)/bin
+#
+# where YAP should look for binary libraries
+#
+LIBDIR=@libdir@
+YAPLIBDIR=@libdir@/Yap
+#
+# where YAP should look for architecture-independent Prolog libraries
+#
+SHAREDIR=$(ROOTDIR)/share
+DOCSDIR=$(SHAREDIR)/doc/Yap/packages/problog
+EXDOCSDIR=$(SHAREDIR)/doc/Yap/packages/examples/problog
+#
+#
+# You shouldn't need to change what follows.
+#
+INSTALL=@INSTALL@
+INSTALL_DATA=@INSTALL_DATA@
+INSTALL_PROGRAM=@INSTALL_PROGRAM@
+srcdir=@srcdir@
+YAP_EXTRAS=@YAP_EXTRAS@ 
+PDFLATEX=pdflatex
+BIBTEX=bibtex
+
+PROGRAMS= \
+	$(srcdir)/problog.yap \
+	$(srcdir)/problog_lbdd.yap \
+	$(srcdir)/problog_lfi.yap \
+	$(srcdir)/dtproblog.yap \
+	$(srcdir)/aproblog.yap \
+	$(srcdir)/problog_learning.yap\
+	$(srcdir)/problog_learning_lbdd.yap
+
+PROBLOG_PROGRAMS= \
+	$(srcdir)/problog/extlists.yap \
+	$(srcdir)/problog/flags.yap \
+	$(srcdir)/problog/gflags.yap \
+	$(srcdir)/problog/grounder.yap \
+	$(srcdir)/problog/hash_table.yap \
+	$(srcdir)/problog/intervals.yap \
+	$(srcdir)/problog/logger.yap \
+	$(srcdir)/problog/mc_DNF_sampling.yap \
+	$(srcdir)/problog/os.yap \
+	$(srcdir)/problog/print.yap \
+	$(srcdir)/problog/sampling.yap \
+	$(srcdir)/problog/tabling.yap \
+	$(srcdir)/problog/timer.yap \
+	$(srcdir)/problog/ptree.yap \
+	$(srcdir)/problog/variable_elimination.yap \
+	$(srcdir)/problog/print_learning.yap \
+	$(srcdir)/problog/utils_learning.yap \
+	$(srcdir)/problog/version_control.yap \
+	$(srcdir)/problog/nestedtries.yap \
+	$(srcdir)/problog/utils.yap \
+	$(srcdir)/problog/utils_lbdd.yap \
+	$(srcdir)/problog/ad_converter.yap \
+	$(srcdir)/problog/termhandling.yap \
+	$(srcdir)/problog/completion.yap \
+	$(srcdir)/problog/discrete.yap \
+	$(srcdir)/problog/bdd.yap \
+	$(srcdir)/problog/variables.yap
+
+PROBLOG_EXAMPLES = \
+	$(srcdir)/problog_examples/alarm.pl \
+	$(srcdir)/problog_examples/graph.pl \
+	$(srcdir)/problog_examples/graph_tabled.pl \
+	$(srcdir)/problog_examples/learn_graph.pl \
+	$(srcdir)/problog_examples/office.pl \
+	$(srcdir)/problog_examples/viralmarketing.pl \
+	$(srcdir)/problog_examples/aProbLog_examples.pl \
+	$(srcdir)/problog_examples/viralmarketing_tabled.pl
+
+MANUAL_NAME = problog
+MANUAL = $(srcdir)/$(MANUAL_NAME)
+
+install: $(PROGRAMS) $(PROBLOG_PROGRAMS) $(PROBLOG_EXAMPLES)
+	mkdir -p $(DESTDIR)$(SHAREDIR)/Yap
+	mkdir -p $(DESTDIR)$(SHAREDIR)/Yap/problog
+	mkdir -p $(DESTDIR)$(DOCSDIR)
+	mkdir -p $(DESTDIR)$(EXDOCSDIR)
+	for p in $(PROGRAMS); do $(INSTALL_DATA) $$p $(DESTDIR)$(SHAREDIR)/Yap; done
+	for p in $(PROBLOG_PROGRAMS); do $(INSTALL_DATA) $$p $(DESTDIR)$(SHAREDIR)/Yap/problog; done
+	$(INSTALL_DATA) $(srcdir)/LICENSE $(DESTDIR)$(DOCSDIR)
+	for p in $(PROBLOG_EXAMPLES); do $(INSTALL_DATA) $$p $(DESTDIR)$(EXDOCSDIR); done
+
+pdf: $(MANUAL)
+	$(PDFLATEX) $(MANUAL)
+	#$(BIBTEX) $(MANUAL_NAME)
+	$(PDFLATEX) $(MANUAL)
+
+install_docs: pdf
+	$(INSTALL_DATA) problog.pdf $(DESTDIR)$(DOCSDIR)

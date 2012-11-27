@@ -1,0 +1,39 @@
+[submodule "packages/chr"]
+	path = packages/chr
+	url = git://yap.git.sourceforge.net/gitroot/yap/chr
+[submodule "packages/clpqr"]
+	path = packages/clpqr
+	url = git://yap.git.sourceforge.net/gitroot/yap/clpqr
+[submodule "packages/jpl"]
+	path = packages/jpl
+	url = git://yap.git.sourceforge.net/gitroot/yap/jpl
+[submodule "packages/zlib"]
+	path = packages/zlib
+	url = git://yap.git.sourceforge.net/gitroot/yap/zlib
+[submodule "packages/http"]
+	path = packages/http
+	url = git://yap.git.sourceforge.net/gitroot/yap/http
+[submodule "packages/clib"]
+	path = packages/clib
+	url = git://yap.git.sourceforge.net/gitroot/yap/clib
+[submodule "packages/sgml"]
+	path = packages/sgml
+	url = git://yap.git.sourceforge.net/gitroot/yap/sgml
+[submodule "packages/RDF"]
+	path = packages/RDF
+	url = git://yap.git.sourceforge.net/gitroot/yap/RDF
+[submodule "packages/semweb"]
+	path = packages/semweb
+	url = git://yap.git.sourceforge.net/gitroot/yap/semweb
+[submodule "packages/plunit"]
+	path = packages/plunit
+	url = git://yap.git.sourceforge.net/gitroot/yap/plunit
+[submodule "packages/R"]
+	path = packages/R
+	url = git://yap.git.sourceforge.net/gitroot/yap/R
+[submodule "packages/pldoc"]
+	path = packages/pldoc
+	url = git://yap.git.sourceforge.net/gitroot/yap/pldoc
+[submodule "packages/real"]
+	path = packages/real
+	url = git://www.swi-prolog.org/home/pl/git/packages/real.git

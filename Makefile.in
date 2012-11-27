@@ -1,0 +1,1030 @@
+#
+# default base directory for YAP installation
+# (EROOT for architecture-dependent files)
+#
+prefix = @prefix@
+exec_prefix = @exec_prefix@
+ROOTDIR = $(prefix)
+EROOTDIR = @exec_prefix@
+#
+# where the binary should be
+#
+BINDIR = $(EROOTDIR)/bin
+#
+# where YAP should look for binary libraries
+#
+LIBDIR=@libdir@
+YAPLIBDIR=@libdir@/Yap
+#
+# where YAP should look for architecture-independent Prolog libraries
+#
+SHAREDIR=$(ROOTDIR)/share
+#
+# where the includes should be stored
+#
+INCLUDEDIR=$(ROOTDIR)/include/Yap
+#
+# where to store info files
+#
+INFODIR=$(SHAREDIR)/info
+#
+# where to store documentation files
+#
+DOCSDIR=$(SHAREDIR)/doc/Yap
+
+#
+# Add this flag to YAP_EXTRAS if you need the extension:
+#	-DRATIONAL_TREES: allow unification and builtins over rational trees
+#       -DCOROUTINING: implement extra control primitives
+#       -DANALYST: low level profiler
+#	-DDEPTH_LIMIT: support depth-limits in Prolog execution
+#	-DLOW_LEVEL_TRACER: low level tracing
+#
+# very experimental stuff, you'll need to contact the developers
+# if you want to use this:
+#       -DYAPOR_COPY: or-parallelism with environment copying, in Muse style.
+#       -DYAPOR_SBA: or-parallelism with sparse binding arrays.
+#       -DYAPOR_COW: or-parallelism with copy-on-write.
+#       -DTABLING: support for tabling
+#
+#
+# check also optimisation options in INSTALL file.
+#
+YAP_EXTRAS=-DCUT_C=1 @YAP_EXTRAS@
+
+YAPSTARTUP=startup.yss
+
+#
+# Please do not add YAP_EXTRA flags here: if you do check the flags
+# for c_interface.c
+#
+CC=@CC@
+MPI_CC=@MPI_CC@
+CPPFLAGS=@CPPFLAGS@  -I. -I$(srcdir)/H -I$(srcdir)/include  -I$(srcdir)/os -I$(srcdir)/OPTYap -I$(srcdir)/BEAM -I$(srcdir)/MYDDAS
+EXECUTABLE_CFLAGS= @CFLAGS@ $(YAP_EXTRAS) $(DEFS) $(CPPFLAGS)
+CFLAGS=  @YAPLIB_CFLAGS@ $(YAP_EXTRAS) $(DEFS) $(CPPFLAGS)
+C_INTERF_FLAGS= @YAPLIB_CFLAGS@ $(YAP_EXTRAS) $(DEFS) $(CPPFLAGS) -I$(srcdir)/include
+C_PARSER_FLAGS= @YAPLIB_CFLAGS@ $(YAP_EXTRAS) $(DEFS) $(CPPFLAGS)
+#
+#
+# You shouldn't need to change what follows.
+#
+ARCH=@ARCH@
+AWK=@AWK@
+CPP=@CPP@
+DEFS=@DEFS@ -D_YAP_NOT_INSTALLED_=1
+LIBS=@LIBS@
+LDFLAGS=@LDFLAGS@
+LN_S=@LN_S@
+M4=@M4@
+GCC=@GCC@
+INSTALL=@INSTALL@
+INSTALL_DATA=@INSTALL_DATA@
+INSTALL_INFO=@INSTALL_INFO@
+INSTALL_PROGRAM=@INSTALL_PROGRAM@
+M4GENHDRS=$(srcdir)/@M4GENHDRS@
+M4GENABSMI=$(srcdir)/@M4GENABSMI@
+INDENT=@INDENT@
+SHELL=@SHELL@
+RANLIB=@RANLIB@
+AR=@AR@
+srcdir=@srcdir@
+abs_top_builddir=@abs_top_builddir@
+SO=@SO@
+MAKEINFO=makeinfo
+TEXI2DVI=texi2dvi
+TEXI2HTML=texi2html
+TEXI2PDF=texi2pdf
+YAPLIB=@YAPLIB@
+SONAMEFLAG=@SONAMEFLAG@
+
+#4.1VPATH=@srcdir@:@srcdir@/OPTYap
+CWD=$(PWD)
+#
+VERSION=6.3.2
+MYDDAS_VERSION=MYDDAS-0.9.1
+#
+
+INTERFACE_HEADERS = \
+	$(IOLIB_HEADERS) \
+	$(srcdir)/include/c_interface.h \
+	$(srcdir)/include/clause_list.h \
+	$(srcdir)/include/dswiatoms.h \
+	$(srcdir)/include/udi.h \
+	$(srcdir)/include/rtree_udi.h \
+	$(srcdir)/include/yap_structs.h \
+	$(srcdir)/include/YapInterface.h \
+	$(srcdir)/include/SWI-Prolog.h \
+	$(srcdir)/H/TermExt.h \
+	$(srcdir)/H/YapTags.h \
+	$(srcdir)/H/Tags_32bits.h \
+	$(srcdir)/H/Tags_32Ops.h \
+	$(srcdir)/H/Tags_32LowTag.h \
+	$(srcdir)/H/Tags_64bits.h \
+	$(srcdir)/H/Tags_24bits.h \
+	$(srcdir)/H/YapCompoundTerm.h \
+	$(srcdir)/include/YapRegs.h \
+	$(srcdir)/H/YapTerm.h \
+	$(srcdir)/library/dialect/bprolog/fli/bprolog.h \
+	$(srcdir)/os/pl-thread.h \
+	$(srcdir)/os/SWI-Stream.h
+
+IOLIB_HEADERS=$(srcdir)/os/pl-buffer.h \
+	$(srcdir)/os/pl-ctype.h  \
+	$(srcdir)/H/pl-codelist.h \
+	$(srcdir)/os/pl-dtoa.h \
+	$(srcdir)/os/dtoa.c  \
+	$(srcdir)/H/pl-incl.h \
+	$(srcdir)/H/pl-global.h \
+	$(srcdir)/os/pl-mswchar.h \
+	$(srcdir)/os/pl-option.h  \
+	$(srcdir)/os/pl-os.h \
+	$(srcdir)/os/pl-privitf.h \
+	$(srcdir)/os/pl-table.h \
+	$(srcdir)/os/pl-text.h \
+	$(srcdir)/os/pl-utf8.h \
+	$(srcdir)/H/pl-yap.h @ENABLE_WINCONSOLE@ $(srcdir)/os/windows/dirent.h $(srcdir)/os/windows/utf8.h $(srcdir)/os/windows/utf8.c $(srcdir)/os/windows/uxnt.h  $(srcdir)/os/windows/mswchar.h  $(srcdir)/os/windows/popen.c 
+
+HEADERS = \
+	$(srcdir)/H/Atoms.h \
+	$(srcdir)/H/sshift.h \
+	$(srcdir)/H/Yap.h \
+	$(srcdir)/H/Yatom.h \
+	$(srcdir)/H/YapHeap.h \
+	$(srcdir)/H/Regs.h \
+	$(srcdir)/H/Yapproto.h \
+	$(srcdir)/H/absmi.h  \
+	$(srcdir)/H/alloc.h \
+	$(srcdir)/H/amidefs.h \
+	$(srcdir)/H/amiops.h \
+	$(srcdir)/H/arrays.h \
+	$(srcdir)/H/arith2.h \
+	$(srcdir)/H/attvar.h \
+	$(srcdir)/H/clause.h \
+	$(srcdir)/H/compile.h \
+	$(srcdir)/H/corout.h \
+	$(srcdir)/H/dlmalloc.h \
+	$(srcdir)/H/dglobals.h \
+	$(srcdir)/H/dlocals.h \
+	$(srcdir)/H/dhstruct.h \
+	$(srcdir)/H/eval.h \
+	$(srcdir)/H/heapgc.h   \
+	$(srcdir)/H/hglobals.h \
+	$(srcdir)/H/hlocals.h \
+	$(srcdir)/H/hstruct.h \
+	$(srcdir)/H/iglobals.h \
+	$(srcdir)/H/ihstruct.h \
+	$(srcdir)/H/ilocals.h \
+	$(srcdir)/H/index.h \
+	$(srcdir)/H/inline-only.h \
+	$(srcdir)/H/iopreds.h \
+	$(srcdir)/H/iswiatoms.h \
+	$(srcdir)/H/qly.h \
+	$(srcdir)/H/rclause.h \
+	$(srcdir)/H/rglobals.h \
+	$(srcdir)/H/rlocals.h \
+	$(srcdir)/H/rheap.h \
+	$(srcdir)/H/rhstruct.h \
+	$(srcdir)/H/threads.h \
+	$(srcdir)/H/tracer.h \
+	$(srcdir)/H/trim_trail.h \
+	$(srcdir)/H/yapio.h \
+	$(srcdir)/BEAM/eam.h $(srcdir)/BEAM/eamamasm.h \
+	$(srcdir)/OPTYap/opt.config.h \
+	$(srcdir)/OPTYap/opt.proto.h $(srcdir)/OPTYap/opt.structs.h \
+	$(srcdir)/OPTYap/opt.macros.h $(srcdir)/OPTYap/or.macros.h \
+	$(srcdir)/OPTYap/or.sba_amiops.h $(srcdir)/OPTYap/or.sba_unify.h \
+	$(srcdir)/OPTYap/tab.structs.h $(srcdir)/OPTYap/locks_x86.h \
+	$(srcdir)/OPTYap/locks_sparc.h $(srcdir)/OPTYap/locks_mips.h \
+	$(srcdir)/OPTYap/locks_mips_funcs.h $(srcdir)/OPTYap/locks_alpha.h \
+	$(srcdir)/OPTYap/locks_alpha_funcs.h \
+	$(srcdir)/OPTYap/locks_pthread.h \
+	$(srcdir)/H/cut_c.h \
+	$(srcdir)/H/iatoms.h $(srcdir)/H/ratoms.h $(srcdir)/H/tatoms.h \
+	$(srcdir)/library/dialect/swi/fli/swi.h \
+	$(srcdir)/MYDDAS/myddas.h $(srcdir)/MYDDAS/myddas_structs.h \
+	$(srcdir)/MYDDAS/myddas_statistics.h \
+	$(srcdir)/MYDDAS/myddas_statistics_structs.h \
+	$(srcdir)/MYDDAS/myddas_wkb.h $(srcdir)/MYDDAS/myddas_wkb2prolog.h
+
+IOLIB_SOURCES=$(srcdir)/os/pl-buffer.c $(srcdir)/os/pl-ctype.c \
+	$(srcdir)/os/pl-codelist.c \
+	$(srcdir)/os/pl-dtoa.c  \
+	$(srcdir)/os/pl-error.c  \
+	$(srcdir)/os/pl-file.c \
+	$(srcdir)/os/pl-files.c  \
+	$(srcdir)/os/pl-fmt.c  \
+	$(srcdir)/os/pl-glob.c  \
+	$(srcdir)/os/pl-option.c  \
+	$(srcdir)/os/pl-os.c \
+	$(srcdir)/os/pl-prologflag.c \
+	$(srcdir)/os/pl-privitf.c \
+	$(srcdir)/os/pl-read.c \
+	$(srcdir)/os/pl-rl.c  \
+	$(srcdir)/os/pl-stream.c $(srcdir)/os/pl-string.c \
+	$(srcdir)/os/pl-table.c \
+	$(srcdir)/os/pl-tai.c  \
+	$(srcdir)/os/pl-text.c \
+	$(srcdir)/os/pl-write.c \
+	$(srcdir)/C/pl-yap.c @ENABLE_WINCONSOLE@$(srcdir)/os/windows/uxnt.c
+
+C_SOURCES= \
+	$(IOLIB_SOURCES) \
+	$(srcdir)/C/absmi.c $(srcdir)/C/adtdefs.c \
+	$(srcdir)/C/agc.c $(srcdir)/C/alloc.c \
+	$(srcdir)/C/amasm.c $(srcdir)/C/analyst.c \
+	$(srcdir)/C/arith0.c $(srcdir)/C/arith1.c $(srcdir)/C/arith2.c \
+	$(srcdir)/C/arrays.c \
+	$(srcdir)/C/attvar.c $(srcdir)/C/bb.c \
+	$(srcdir)/C/bignum.c \
+	$(srcdir)/C/c_interface.c $(srcdir)/C/cdmgr.c $(srcdir)/C/cmppreds.c \
+	$(srcdir)/C/clause_list.c \
+	$(srcdir)/C/compiler.c $(srcdir)/C/computils.c \
+	$(srcdir)/C/corout.c $(srcdir)/C/dbase.c $(srcdir)/C/dlmalloc.c \
+	$(srcdir)/C/errors.c \
+	$(srcdir)/C/eval.c $(srcdir)/C/exec.c \
+	$(srcdir)/C/globals.c $(srcdir)/C/gmp_support.c \
+	$(srcdir)/C/gprof.c $(srcdir)/C/grow.c \
+	$(srcdir)/C/heapgc.c $(srcdir)/C/index.c	   \
+	$(srcdir)/C/init.c $(srcdir)/C/inlines.c	   \
+	$(srcdir)/C/iopreds.c $(srcdir)/C/depth_bound.c \
+	$(srcdir)/C/load_foreign.c \
+	$(srcdir)/C/load_dl.c $(srcdir)/C/load_dld.c $(srcdir)/C/load_none.c \
+	$(srcdir)/C/load_aout.c $(srcdir)/C/load_aix.c $(srcdir)/C/load_dll.c \
+	$(srcdir)/C/load_shl.c $(srcdir)/C/load_dyld.c \
+	$(srcdir)/C/mavar.c $(srcdir)/C/modules.c $(srcdir)/C/other.c       \
+	$(srcdir)/C/parser.c \
+	$(srcdir)/C/qlyr.c \
+	$(srcdir)/C/qlyw.c \
+	$(srcdir)/C/save.c $(srcdir)/C/scanner.c \
+	$(srcdir)/C/sort.c $(srcdir)/C/stdpreds.c $(srcdir)/C/sysbits.c \
+	$(srcdir)/C/threads.c \
+	$(srcdir)/C/tracer.c $(srcdir)/C/unify.c $(srcdir)/C/userpreds.c  \
+	$(srcdir)/C/udi.c \
+	$(srcdir)/packages/udi/rtree.c \
+	$(srcdir)/packages/udi/rtree_udi.c \
+	$(srcdir)/C/utilpreds.c $(srcdir)/C/write.c $(srcdir)/console/yap.c \
+	$(srcdir)/C/yap-args.c \
+	$(srcdir)/C/ypstdio.c \
+	$(srcdir)/BEAM/eam_am.c $(srcdir)/BEAM/eam_showcode.c \
+	$(srcdir)/BEAM/eamindex.c $(srcdir)/BEAM/eamamasm.c \
+	$(srcdir)/BEAM/eam_gc.c $(srcdir)/BEAM/eam_split.c \
+	$(srcdir)/OPTYap/or.memory.c $(srcdir)/OPTYap/opt.init.c \
+	$(srcdir)/OPTYap/opt.preds.c $(srcdir)/OPTYap/or.copy_engine.c \
+	$(srcdir)/OPTYap/or.cow_engine.c $(srcdir)/OPTYap/or.sba_engine.c \
+	$(srcdir)/OPTYap/or.thread_engine.c \
+	$(srcdir)/OPTYap/or.scheduler.c $(srcdir)/OPTYap/or.cut.c \
+	$(srcdir)/OPTYap/tab.tries.c $(srcdir)/OPTYap/tab.completion.c \
+	$(srcdir)/library/mpi/mpi.c $(srcdir)/library/mpi/mpe.c \
+	$(srcdir)/library/lammpi/yap_mpi.c $(srcdir)/library/lammpi/hash.c $(srcdir)/library/lammpi/prologterms2c.c  \
+	$(srcdir)/C/cut_c.c \
+	$(srcdir)/library/dialect/swi/fli/swi.c \
+	$(srcdir)/library/dialect/swi/fli/blobs.c \
+	$(srcdir)/MYDDAS/myddas_mysql.c \
+	$(srcdir)/MYDDAS/myddas_odbc.c \
+	$(srcdir)/MYDDAS/myddas_util.c \
+	$(srcdir)/MYDDAS/myddas_initialization.c \
+	$(srcdir)/MYDDAS/myddas_shared.c \
+	$(srcdir)/MYDDAS/myddas_statistics.c \
+	$(srcdir)/MYDDAS/myddas_top_level.c \
+	$(srcdir)/MYDDAS/myddas_wkb2prolog.c
+
+PLCONS_SOURCES = \
+	$(srcdir)/console/LGPL/pl-nt.c \
+	$(srcdir)/console/LGPL/pl-ntcon.c \
+	$(srcdir)/console/LGPL/pl-ntconsole.c \
+	$(srcdir)/console/LGPL/pl-ntmain.c
+
+PL_SOURCES= \
+	$(srcdir)/pl/arith.yap \
+	$(srcdir)/pl/arrays.yap \
+	$(srcdir)/pl/attributes.yap \
+	$(srcdir)/pl/boot.yap \
+	$(srcdir)/pl/callcount.yap\
+	$(srcdir)/pl/checker.yap $(srcdir)/pl/chtypes.yap \
+	$(srcdir)/pl/consult.yap \
+	$(srcdir)/pl/control.yap \
+	$(srcdir)/pl/corout.yap $(srcdir)/pl/debug.yap \
+	$(srcdir)/pl/dbload.yap \
+	$(srcdir)/pl/depth_bound.yap \
+	$(srcdir)/pl/dialect.yap \
+	$(srcdir)/pl/directives.yap \
+	$(srcdir)/pl/eam.yap \
+	$(srcdir)/pl/eval.yap \
+	$(srcdir)/pl/errors.yap	\
+	$(srcdir)/pl/flags.yap	\
+	$(srcdir)/pl/grammar.yap \
+	$(srcdir)/pl/ground.yap \
+	$(srcdir)/pl/hacks.yap \
+	$(srcdir)/pl/init.yap \
+	$(srcdir)/pl/listing.yap \
+	$(srcdir)/pl/lists.yap \
+	$(srcdir)/pl/messages.yap \
+	$(srcdir)/pl/load_foreign.yap \
+	$(srcdir)/pl/modules.yap $(srcdir)/pl/preds.yap \
+	$(srcdir)/pl/profile.yap \
+	$(srcdir)/pl/protect.yap \
+	$(srcdir)/pl/qly.yap \
+	$(srcdir)/pl/save.yap \
+	$(srcdir)/pl/setof.yap \
+	$(srcdir)/pl/signals.yap \
+	$(srcdir)/pl/sort.yap \
+	$(srcdir)/pl/statistics.yap \
+	$(srcdir)/pl/strict_iso.yap \
+	$(srcdir)/pl/tabling.yap $(srcdir)/pl/threads.yap \
+	$(srcdir)/pl/udi.yap \
+	$(srcdir)/pl/utils.yap \
+	$(srcdir)/pl/history.pl \
+	$(srcdir)/pl/swi.yap \
+	$(srcdir)/pl/yapor.yap $(srcdir)/pl/yio.yap
+
+YAPDOCS=$(srcdir)/docs/yap.tex $(srcdir)/docs/chr.tex \
+	$(srcdir)/docs/clpr.tex $(srcdir)/docs/swi.tex
+
+IOLIB_OBJECTS=pl-buffer.o pl-codelist.o pl-ctype.o pl-dtoa.o pl-error.o  \
+	pl-file.o pl-files.o pl-fmt.o \
+	pl-glob.o pl-option.o \
+	pl-nt.o \
+	pl-os.o pl-privitf.o \
+	pl-prologflag.o \
+	pl-read.o \
+	pl-rl.o \
+	pl-stream.o pl-string.o pl-table.o \
+	pl-tai.o pl-text.o pl-utf8.o \
+	pl-write.o \
+	pl-yap.o @ENABLE_WINCONSOLE@ uxnt.o
+
+ENGINE_OBJECTS = \
+	agc.o absmi.o adtdefs.o alloc.o amasm.o analyst.o arrays.o \
+	arith0.o arith1.o arith2.o attvar.o \
+	bignum.o bb.o \
+	cdmgr.o cmppreds.o compiler.o computils.o \
+	corout.o cut_c.o dbase.o dlmalloc.o errors.o eval.o \
+	exec.o globals.o gmp_support.o gprof.o grow.o \
+	heapgc.o index.o init.o  inlines.o \
+	iopreds.o depth_bound.o mavar.o \
+	myddas_mysql.o myddas_odbc.o myddas_shared.o myddas_initialization.o \
+	myddas_util.o myddas_statistics.o myddas_top_level.o \
+	myddas_wkb2prolog.o modules.o other.o   \
+	parser.o qlyr.o qlyw.o save.o scanner.o sort.o stdpreds.o \
+	sysbits.o threads.o tracer.o \
+	udi.o rtree.o rtree_udi.o\
+	unify.o userpreds.o utilpreds.o \
+	yap-args.o write.o \
+	blobs.o swi.o ypstdio.o $(IOLIB_OBJECTS)  @MPI_OBJS@
+
+LIBTAI_OBJECTS = \
+	tai_add.o tai_now.o tai_pack.o \
+        tai_sub.o tai_unpack.o taia_add.o taia_approx.o \
+        taia_fmtfrac.o taia_frac.o taia_half.o taia_less.o \
+        taia_now.o taia_pack.o taia_sub.o taia_tai.o taia_unpack.o \
+        caldate_fmt.o caldate_scan.o caldate_fmjd.o caldate_mjd.o \
+        caldate_norm.o caldate_ster.o leapsecs_read.o \
+        leapsecs_init.o leapsecs_add.o leapsecs_sub.o caltime_fmt.o \
+        caltime_scan.o caltime_tai.o caltime_utc.o
+
+C_INTERFACE_OBJECTS = \
+	load_foreign.o load_dl.o load_dld.o load_dyld.o \
+	load_none.o load_aout.o load_aix.o load_dll.o load_shl.o \
+	c_interface.o clause_list.o
+
+OR_OBJECTS = \
+	or.memory.o opt.init.o opt.preds.o   \
+	or.copy_engine.o or.cow_engine.o or.sba_engine.o or.thread_engine.o \
+	or.scheduler.o or.cut.o      \
+	tab.tries.o tab.completion.o
+
+BEAM_OBJECTS = \
+	eamamasm.o eam_showcode.o eamindex.o eam_am.o
+
+STATIC_OBJECTS = \
+	@STATIC_MODE@sys.o yap_random.o regexp.o  @NO_BUILTIN_REGEXP@ regcomp.o regerror.o regfree.o regexec.o
+
+LIB_OBJECTS = $(ENGINE_OBJECTS) $(C_INTERFACE_OBJECTS) $(OR_OBJECTS) $(BEAM_OBJECTS) $(STATIC_OBJECTS) $(LIBTAI_OBJECTS)
+
+OBJECTS = yap.o $(LIB_OBJECTS)
+
+PLCONS_OBJECTS = \
+	pl-ntcon.o \
+	pl-ntconsole.o \
+	pl-ntmain.o
+
+all: parms.h startup.yss @ENABLE_WINCONSOLE@ yap-win@EXEC_SUFFIX@
+
+Makefile: $(srcdir)/Makefile.in
+
+$(srcdir)/H/Yap.h: config.h YapTermConfig.h \
+		$(srcdir)/H/YapTags.h \
+		$(srcdir)/H/YapCompoundTerm.h
+
+config.h:	parms.h
+
+parms.h:	Makefile
+		@echo "#define YAP_ROOTDIR       \"$(prefix)\""   > $@%
+		@echo "#define YAP_BINDIR	    \"$(BINDIR)\""   >> $@%
+		@echo "#define YAP_LIBDIR	    \"$(YAPLIBDIR)\""   >> $@%
+		@echo "#define YAP_SHAREDIR	    \"$(SHAREDIR)\""   >> $@%
+		@echo "#define YAP_PL_SRCDIR	    \"$(SHAREDIR)/Yap/pl\""   >> $@%
+		@echo "#define YAP_STARTUP   \"$(YAPSTARTUP)\"" >> $@%
+		@echo $(VERSION) | $(AWK) -F. '{ printf("#define YAP_VERSION %d\n", $$1 * 10000 + $$2 * 100 + $$3); }' >> $@%
+		@echo "#define MYDDAS_VERSION	    \"$(MYDDAS_VERSION)\""       >> $@%
+		@echo "#define YAP_ARCH	    \"$(ARCH)\""       >> $@%
+		@echo "#define YAP_LIBS	    \"$(LIBS)\""     >> $@%
+		@echo "#define YAP_YAPLIB	    \"$(YAPLIB)\""   >> $@%
+		@echo "#define YAP_CC	    \"$(CC)\""	       >> $@%
+		@echo "#define YAP_CFLAGS	    \"$(CFLAGS)\"" >> $@%
+		@echo "#define YAP_LDFLAGS    \"$(LDFLAGS)\""    >> $@%
+		@echo "#define YAP_SHLIB_SUFFIX    \".\" \"$(SO)\""    >> $@%
+		@echo "#define YAP_TIMESTAMP \"`date +%s`\"" >> $@%
+		@echo "#define YAP_SVERSION   \"YAP $(VERSION) ($(ARCH)): `date`\"" >> $@%
+		@if cmp -s $@% $@; then rm $@%; else mv $@% $@; fi
+
+
+#special rule for this one: we cannot use -fomit-frame-pointer because this will
+# interface with the outside world.
+c_interface.o: $(srcdir)/C/c_interface.c $(srcdir)/include/c_interface.h config.h
+	$(CC) $(C_INTERF_FLAGS) -c $(srcdir)/C/c_interface.c -o c_interface.o
+
+yap-argss.o: $(srcdir)/C/yap-args.c $(srcdir)/include/c_interface.h config.h
+	$(CC) $(C_INTERF_FLAGS) -c $(srcdir)/C/yap-args.c -o yap-args.o
+
+clause_list.o: $(srcdir)/C/clause_list.c $(srcdir)/include/clause_list.h config.h
+	$(CC) $(C_INTERF_FLAGS) -c $(srcdir)/C/clause_list.c -o clause_list.o
+
+init.o: $(srcdir)/C/init.c config.h
+	$(CC) -c $(CFLAGS) $(srcdir)/C/init.c -o $@
+
+load_foreign.o: $(srcdir)/C/load_foreign.c config.h
+	$(CC) -c $(CFLAGS) $(srcdir)/C/load_foreign.c -o $@
+
+qlyr.o: $(srcdir)/C/qlyr.c config.h
+	$(CC) -c $(CFLAGS) $(srcdir)/C/qlyr.c -o $@
+
+qlyw.o: $(srcdir)/C/qlyw.c config.h
+	$(CC) -c $(CFLAGS) $(srcdir)/C/qlyw.c -o $@
+
+save.o: $(srcdir)/C/save.c config.h
+	$(CC) -c $(CFLAGS) $(srcdir)/C/save.c -o $@
+
+sysbits.o: $(srcdir)/C/sysbits.c config.h
+	$(CC) -c $(CFLAGS) $(srcdir)/C/sysbits.c -o $@
+
+udi.o: $(srcdir)/C/udi.c config.h
+	$(CC) -c $(C_INTERF_FLAGS) $(srcdir)/C/udi.c -o $@
+
+rtree.o: $(srcdir)/packages/udi/rtree.c config.h
+	$(CC) -c $(C_INTERF_FLAGS) $(srcdir)/packages/udi/rtree.c -o $@
+
+rtree_udi.o: $(srcdir)/packages/udi/rtree_udi.c config.h
+	$(CC) -c $(C_INTERF_FLAGS) $(srcdir)/packages/udi/rtree_udi.c -o $@
+
+yap.o: $(srcdir)/console/yap.c config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include $(srcdir)/console/yap.c -o $@
+
+mpi.o: $(srcdir)/library/mpi/mpi.c config.h
+	$(MPI_CC) -c $(CFLAGS) $(srcdir)/library/mpi/mpi.c -o $@
+
+mpe.o: $(srcdir)/library/mpi/mpe.c config.h
+	$(MPI_CC) -c $(CFLAGS) $(srcdir)/library/mpi/mpe.c -o $@
+
+myddas_mysql.o: $(srcdir)/MYDDAS/myddas_mysql.c config.h
+	$(CC) -c $(CFLAGS) $(srcdir)/MYDDAS/myddas_mysql.c -o $@
+
+myddas_odbc.o: $(srcdir)/MYDDAS/myddas_odbc.c config.h
+	$(CC) -c $(CFLAGS) $(srcdir)/MYDDAS/myddas_odbc.c -o $@
+
+myddas_shared.o: $(srcdir)/MYDDAS/myddas_shared.c config.h
+	$(CC) -c $(CFLAGS) $(srcdir)/MYDDAS/myddas_shared.c -o $@
+
+myddas_util.o: $(srcdir)/MYDDAS/myddas_util.c config.h
+	$(CC) -c $(CFLAGS) $(srcdir)/MYDDAS/myddas_util.c -o $@
+
+myddas_initialization.o: $(srcdir)/MYDDAS/myddas_initialization.c config.h
+	$(CC) -c $(CFLAGS) $(srcdir)/MYDDAS/myddas_initialization.c -o $@
+
+myddas_top_level.o: $(srcdir)/MYDDAS/myddas_top_level.c config.h
+	$(CC) -c $(CFLAGS) $(srcdir)/MYDDAS/myddas_top_level.c -o $@
+
+myddas_wkb2prolog.o: $(srcdir)/MYDDAS/myddas_wkb2prolog.c config.h
+	$(CC) -c $(CFLAGS) $(srcdir)/MYDDAS/myddas_wkb2prolog.c -o $@
+
+myddas_statistics.o: $(srcdir)/MYDDAS/myddas_statistics.c config.h
+	$(CC) -c $(CFLAGS) $(srcdir)/MYDDAS/myddas_statistics.c -o $@
+
+or.memory.o: $(srcdir)/OPTYap/or.memory.c config.h
+	$(CC) -c $(CFLAGS) $(srcdir)/OPTYap/or.memory.c -o $@
+
+opt.init.o: $(srcdir)/OPTYap/opt.init.c config.h
+	$(CC) -c $(CFLAGS) $(srcdir)/OPTYap/opt.init.c -o $@
+
+opt.preds.o: $(srcdir)/OPTYap/opt.preds.c config.h
+	$(CC) -c $(CFLAGS) $(srcdir)/OPTYap/opt.preds.c -o $@
+
+or.cut.o: $(srcdir)/OPTYap/or.cut.c config.h
+	$(CC) -c $(CFLAGS) $(srcdir)/OPTYap/or.cut.c -o $@
+
+or.copy_engine.o: $(srcdir)/OPTYap/or.copy_engine.c config.h
+	$(CC) -c $(CFLAGS) $(srcdir)/OPTYap/or.copy_engine.c -o $@
+
+or.cow_engine.o: $(srcdir)/OPTYap/or.cow_engine.c config.h
+	$(CC) -c $(CFLAGS) $(srcdir)/OPTYap/or.cow_engine.c -o $@
+
+or.sba_engine.o: $(srcdir)/OPTYap/or.sba_engine.c config.h
+	$(CC) -c $(CFLAGS) $(srcdir)/OPTYap/or.sba_engine.c -o $@
+
+or.thread_engine.o: $(srcdir)/OPTYap/or.thread_engine.c config.h
+	$(CC) -c $(CFLAGS) $(srcdir)/OPTYap/or.thread_engine.c -o $@
+
+or.scheduler.o: $(srcdir)/OPTYap/or.scheduler.c config.h
+	$(CC) -c $(CFLAGS) $(srcdir)/OPTYap/or.scheduler.c -o $@
+
+tab.tries.o: $(srcdir)/OPTYap/tab.tries.c config.h
+	$(CC) -c $(CFLAGS) $(srcdir)/OPTYap/tab.tries.c -o $@
+
+tab.completion.o: $(srcdir)/OPTYap/tab.completion.c config.h
+	$(CC) -c $(CFLAGS) $(srcdir)/OPTYap/tab.completion.c -o $@
+
+eam_showcode.o:  $(srcdir)/BEAM/eam_showcode.c config.h
+	$(CC) -c $(CFLAGS) $(srcdir)/BEAM/eam_showcode.c -o $@
+
+eam_am.o:  $(srcdir)/BEAM/eam_am.c config.h
+	$(CC) -c $(CFLAGS) $(srcdir)/BEAM/eam_am.c -o $@
+
+eamamasm.o:  $(srcdir)/BEAM/eamamasm.c config.h
+	$(CC) -c $(CFLAGS) $(srcdir)/BEAM/eamamasm.c -o $@
+
+eamindex.o:  $(srcdir)/BEAM/eamindex.c config.h
+	$(CC) -c $(CFLAGS) $(srcdir)/BEAM/eamindex.c -o $@
+
+sys.o: $(srcdir)/library/system/sys.c config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include $(srcdir)/library/system/sys.c  -o $@
+
+swi.o: $(srcdir)/library/dialect/swi/fli/swi.c  $(srcdir)/library/dialect/swi/fli/swi.h $(srcdir)/include/SWI-Prolog.h $(srcdir)/os/SWI-Stream.h config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include  -I$(srcdir)/library/dialect/swi/fli  $(srcdir)/library/dialect/swi/fli/swi.c  -o $@
+
+blobs.o: $(srcdir)/library/dialect/swi/fli/blobs.c  $(srcdir)/library/dialect/swi/fli/swi.h  $(srcdir)/include/SWI-Prolog.h config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include  -I$(srcdir)/library/dialect/swi/fli  $(srcdir)/library/dialect/swi/fli/blobs.c  -o $@
+
+yap_random.o: $(srcdir)/library/random/yap_random.c config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include  $(srcdir)/library/random/yap_random.c  -o $@
+
+regexp.o: $(srcdir)/library/regex/regexp.c  @NO_BUILTIN_REGEXP@ $(srcdir)/library/regex/regex2.h  $(srcdir)/library/regex/engine.c config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include -I$(srcdir)/library/regex $(srcdir)/library/regex/regexp.c -o regexp.o
+
+regcomp.o: $(srcdir)/library/regex/regcomp.c $(srcdir)/library/regex/regex2.h config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include -I$(srcdir)/library/regex $(srcdir)/library/regex/regcomp.c -o regcomp.o
+
+regerror.o: $(srcdir)/library/regex/regerror.c config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include -I$(srcdir)/library/regex $(srcdir)/library/regex/regerror.c -o regerror.o
+
+regfree.o: $(srcdir)/library/regex/regfree.c $(srcdir)/library/regex/regex2.h config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include -I$(srcdir)/library/regex $(srcdir)/library/regex/regfree.c -o regfree.o
+
+regexec.o: $(srcdir)/library/regex/regexec.c config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include -I$(srcdir)/library/regex $(srcdir)/library/regex/regexec.c -o regexec.o
+
+pl-nt.o: $(srcdir)/os/pl-nt.c config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include -I$(srcdir)/os @EXTRA_INCLUDES_FOR_WIN32@ $(srcdir)/os/pl-nt.c -o $@
+
+pl-ntcon.o: $(srcdir)/console/LGPL/pl-ntcon.c config.h
+	$(CC) -c $(CFLAGS) -DPL_CONSOLE=1 -I$(srcdir)/include $(srcdir)/console/LGPL/pl-ntcon.c -o $@
+
+pl-ntconsole.o: $(srcdir)/console/LGPL/pl-ntconsole.c config.h
+	$(CC) -municode -DUNICODE -D_UNICODE -c $(CFLAGS) -DPL_CONSOLE=1  -I$(srcdir) -I$(srcdir)/include -I$(srcdir)/os @EXTRA_INCLUDES_FOR_WIN32@ $(srcdir)/console/LGPL/pl-ntconsole.c -o $@
+
+pl-ntmain.o: $(srcdir)/console/LGPL/pl-ntmain.c config.h
+	$(CC) -municode -DUNICODE -D_UNICODE -c $(CFLAGS) -DPL_CONSOLE=1 -I$(srcdir)/include  -I$(srcdir)  -I$(srcdir)/os @EXTRA_INCLUDES_FOR_WIN32@ $(srcdir)/console/LGPL/pl-ntmain.c -o $@
+
+pl-buffer.o: $(srcdir)/os/pl-buffer.c config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include  -I$(srcdir)  -I$(srcdir)/os  @EXTRA_INCLUDES_FOR_WIN32@  $(srcdir)/os/pl-buffer.c -o $@
+
+pl-codelist.o: $(srcdir)/os/pl-codelist.c config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include  -I$(srcdir)  -I$(srcdir)/os @EXTRA_INCLUDES_FOR_WIN32@ $(srcdir)/os/pl-codelist.c -o $@
+
+pl-ctype.o: $(srcdir)/os/pl-ctype.c config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include  -I$(srcdir)  -I$(srcdir)/os @EXTRA_INCLUDES_FOR_WIN32@ $(srcdir)/os/pl-ctype.c -o $@
+
+pl-dtoa.o: $(srcdir)/os/pl-dtoa.c config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include  -I$(srcdir)  -I$(srcdir)/os @EXTRA_INCLUDES_FOR_WIN32@ $(srcdir)/os/pl-dtoa.c -o $@
+
+pl-error.o: $(srcdir)/os/pl-error.c config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include  -I$(srcdir)  -I$(srcdir)/os @EXTRA_INCLUDES_FOR_WIN32@ $(srcdir)/os/pl-error.c -o $@
+
+pl-file.o: $(srcdir)/os/pl-file.c config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include  -I$(srcdir)  -I$(srcdir)/os @EXTRA_INCLUDES_FOR_WIN32@ $(srcdir)/os/pl-file.c -o $@
+
+pl-files.o: $(srcdir)/os/pl-files.c config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include  -I$(srcdir)  -I$(srcdir)/os @EXTRA_INCLUDES_FOR_WIN32@ $(srcdir)/os/pl-files.c -o $@
+
+pl-fmt.o: $(srcdir)/os/pl-fmt.c config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include  -I$(srcdir)  -I$(srcdir)/os @EXTRA_INCLUDES_FOR_WIN32@ $(srcdir)/os/pl-fmt.c -o $@
+
+pl-glob.o: $(srcdir)/os/pl-glob.c config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include  -I$(srcdir)  -I$(srcdir)/os @EXTRA_INCLUDES_FOR_WIN32@ $(srcdir)/os/pl-glob.c -o $@
+
+pl-option.o: $(srcdir)/os/pl-option.c config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include  -I$(srcdir)  -I$(srcdir)/os @EXTRA_INCLUDES_FOR_WIN32@ $(srcdir)/os/pl-option.c -o $@
+
+pl-os.o: $(srcdir)/os/pl-os.c config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include  -I$(srcdir)  -I$(srcdir)/os @EXTRA_INCLUDES_FOR_WIN32@ $(srcdir)/os/pl-os.c -o $@
+
+pl-privitf.o: $(srcdir)/os/pl-privitf.c config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include  -I$(srcdir)  -I$(srcdir)/os @EXTRA_INCLUDES_FOR_WIN32@ $(srcdir)/os/pl-privitf.c -o $@
+
+pl-prologflag.o: $(srcdir)/os/pl-prologflag.c config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include  -I$(srcdir)  -I$(srcdir)/os @EXTRA_INCLUDES_FOR_WIN32@ $(srcdir)/os/pl-prologflag.c -o $@
+
+pl-rl.o: $(srcdir)/os/pl-rl.c config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include  -I$(srcdir)  -I$(srcdir)/os @EXTRA_INCLUDES_FOR_WIN32@ $(srcdir)/os/pl-rl.c -o $@
+
+pl-read.o: $(srcdir)/os/pl-read.c config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include  -I$(srcdir)  -I$(srcdir)/os @EXTRA_INCLUDES_FOR_WIN32@ $(srcdir)/os/pl-read.c -o $@
+
+pl-stream.o: $(srcdir)/os/pl-stream.c config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include  -I$(srcdir)  -I$(srcdir)/os @EXTRA_INCLUDES_FOR_WIN32@ $(srcdir)/os/pl-stream.c -o $@
+
+pl-string.o: $(srcdir)/os/pl-string.c config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include  -I$(srcdir)  -I$(srcdir)/os @EXTRA_INCLUDES_FOR_WIN32@ $(srcdir)/os/pl-string.c -o $@
+
+pl-table.o: $(srcdir)/os/pl-table.c config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include  -I$(srcdir)  -I$(srcdir)/os @EXTRA_INCLUDES_FOR_WIN32@ $(srcdir)/os/pl-table.c -o $@
+
+pl-text.o: $(srcdir)/os/pl-text.c config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include  -I$(srcdir)  -I$(srcdir)/os @EXTRA_INCLUDES_FOR_WIN32@ $(srcdir)/os/pl-text.c -o $@
+
+pl-utf8.o: $(srcdir)/os/pl-utf8.c config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include  -I$(srcdir)  -I$(srcdir)/os @EXTRA_INCLUDES_FOR_WIN32@ $(srcdir)/os/pl-utf8.c -o $@
+
+pl-write.o: $(srcdir)/os/pl-write.c config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include  -I$(srcdir)  -I$(srcdir)/os @EXTRA_INCLUDES_FOR_WIN32@ $(srcdir)/os/pl-write.c -o $@
+
+pl-yap.o: $(srcdir)/C/pl-yap.c config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include  -I$(srcdir)  -I$(srcdir)/os @EXTRA_INCLUDES_FOR_WIN32@ $(srcdir)/C/pl-yap.c -o $@
+
+pl-tai.o: $(srcdir)/os/pl-tai.c config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include  -I$(srcdir)  -I$(srcdir)/os @EXTRA_INCLUDES_FOR_WIN32@  $(srcdir)/os/pl-tai.c -o $@
+
+uxnt.o: $(srcdir)/os/windows/uxnt.c config.h
+	$(CC) -c $(CFLAGS) -I$(srcdir)/include  -I$(srcdir)  -I$(srcdir)/os @EXTRA_INCLUDES_FOR_WIN32@ $(srcdir)/os/windows/uxnt.c -o $@
+
+# libtai rule
+%.o : $(srcdir)/os/libtai/%.c config.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
+
+# default rule
+%.o : $(srcdir)/C/%.c config.h
+	$(CC) -c $(CFLAGS) $< -o $@
+
+
+## CPP'ed files (for macro debugging)
+
+%.i : $(srcdir)/C/%.c
+	$(CC) -E $< $(CFLAGS) > $@
+
+absmi.i: $(srcdir)/C/absmi.c
+	$(CC) -E $(CFLAGS) $(ABSMI_FLAGS) $(srcdir)/C/absmi.c > $@
+
+c_interface.i: $(srcdir)/C/c_interface.c $(srcdir)/include/c_interface.h
+	$(CC) -E $(C_INTERF_FLAGS) $(srcdir)/C/c_interface.c > $@
+#
+
+mycb: $(srcdir)/mycb.c
+	$(CC) $(CFLAGS) $(srcdir)/mycb.c -o mycb
+
+all: startup.yss
+	@ENABLE_GECODE@ @INSTALL_DLLS@ (cd library/gecode; $(MAKE))
+	@INSTALL_DLLS@ (cd library/lammpi; $(MAKE))
+	@INSTALL_MATLAB@ (cd library/matlab; $(MAKE))
+	@INSTALL_DLLS@ (cd library/matrix; $(MAKE))
+	@INSTALL_DLLS@ (cd library/random; $(MAKE))
+	@INSTALL_DLLS@ (cd library/regex; $(MAKE))
+	@INSTALL_DLLS@ (cd library/rltree; $(MAKE))
+	@ENABLE_WINCONSOLE@ (cd LGPL/swi_console; $(MAKE))
+	@INSTALL_DLLS@ (cd library/system; $(MAKE))
+	@INSTALL_DLLS@ (cd library/tries; $(MAKE))
+	@ENABLE_CLIB@ @INSTALL_DLLS@ (cd packages/clib; $(MAKE))
+	@ENABLE_HTTP@ @INSTALL_DLLS@ (cd packages/http; $(MAKE))
+	@ENABLE_PLDOC@  @INSTALL_DLLS@ (cd packages/pldoc; $(MAKE))
+	@ENABLE_PLUNIT@ @INSTALL_DLLS@ (cd packages/plunit; $(MAKE))
+	@ENABLE_R@ @INSTALL_DLLS@ (cd packages/R; $(MAKE))
+	@ENABLE_RDF@ @INSTALL_DLLS@ (cd packages/RDF; $(MAKE))
+	@ENABLE_SEMWEB@ @INSTALL_DLLS@ (cd packages/semweb; $(MAKE))
+	@ENABLE_SGML@ @INSTALL_DLLS@ (cd packages/sgml; $(MAKE))
+	@ENABLE_REAL@ (cd packages/real; $(MAKE))
+	@ENABLE_CLPBN_BP@ (cd packages/CLPBN/horus; $(MAKE))
+	@ENABLE_MINISAT@ (cd packages/swi-minisat2/C; $(MAKE))
+	@ENABLE_LIBARCHIVE@ @INSTALL_DLLS@ (cd packages/archive; $(MAKE))
+	@ENABLE_ZLIB@ @INSTALL_DLLS@ (cd packages/zlib; $(MAKE))
+	@ENABLE_CPLINT@ (cd packages/cplint/approx/simplecuddLPADs; $(MAKE))
+	@ENABLE_CPLINT@ (cd packages/cplint; $(MAKE))
+	@ENABLE_CPLINT@ (cd packages/cplint/slipcase; $(MAKE))
+	@ENABLE_PRISM@ (cd packages/prism/src/c; $(MAKE))
+	@ENABLE_BDDLIB@ (cd packages/bdd; $(MAKE))
+	@ENABLE_CUDD@ (cd packages/ProbLog/simplecudd; $(MAKE))
+	@ENABLE_CUDD@ (cd packages/ProbLog/simplecudd_lfi; $(MAKE))
+	@ENABLE_JPL@ @INSTALL_DLLS@ (cd packages/jpl; $(MAKE))
+
+startup.yss: yap@EXEC_SUFFIX@ $(PL_SOURCES)
+	-rm -f startup.yss
+	echo "bootstrap('$(srcdir)/pl/init.yap'). module(user). qsave_program('startup.yss')." |  @PRE_INSTALL_ENV@ ./yap -b $(srcdir)/pl/boot.yap
+
+yap@EXEC_SUFFIX@: $(HEADERS) yap.o @YAPLIB@
+	$(MPI_CC) $(EXECUTABLE_CFLAGS) $(LDFLAGS) -o yap yap.o @YAPLIB@ $(LIBS) @MPI_LIBS@
+
+yap-win: yap-win@EXEC_SUFFIX@
+
+yapwin: yap-win@EXEC_SUFFIX@
+
+yap-win@EXEC_SUFFIX@: $(PLCONS_OBJECTS) $(HEADERS) @YAPLIB@
+	(cd LGPL/swi_console; $(MAKE))
+	$(MPI_CC) -municode -DUNICODE -D_UNICODE $(EXECUTABLE_CFLAGS) $(LDFLAGS) -Wl,-subsystem,windows -o yap-win $(PLCONS_OBJECTS) plterm.dll @YAPLIB@ $(LIBS) @MPI_LIBS@
+
+libYap.a: $(LIB_OBJECTS) 
+	-rm -f libYap.a
+	$(AR) rc libYap.a $(LIB_OBJECTS)
+	$(RANLIB) libYap.a
+
+@DYNYAPLIB@: $(LIB_OBJECTS)
+	@YAPLIB_LD@ -o @YAPLIB@ $(LIB_OBJECTS) $(LIBS) $(LDFLAGS) $(SONAMEFLAG)
+
+install: install_bin install_data
+
+install_bin: @INSTALL_COMMAND@
+
+install_unix: startup.yss libYap.a
+	mkdir -p $(DESTDIR)$(BINDIR)
+	$(INSTALL_PROGRAM) -m 755 yap@EXEC_SUFFIX@ $(DESTDIR)$(BINDIR)/yap
+	mkdir -p $(DESTDIR)$(YAPLIBDIR)
+	$(INSTALL_DATA) startup.yss $(DESTDIR)$(YAPLIBDIR)/startup.yss
+	@INSTALL_DLLS@ $(INSTALL_DATA) -m 755 @YAPLIB@ $(DESTDIR)$(LIBDIR)
+	mkdir -p $(DESTDIR)$(SHAREDIR)/Yap
+	mkdir -p $(DESTDIR)$(SHAREDIR)/Yap/pl
+	mkdir -p $(DESTDIR)$(DOCSDIR)
+	$(INSTALL) $(srcdir)/Artistic $(DESTDIR)$(DOCSDIR)
+	$(INSTALL) $(srcdir)/README $(DESTDIR)$(DOCSDIR)
+	$(INSTALL) $(srcdir)/COPYING $(DESTDIR)$(DOCSDIR)
+	for f in $(PL_SOURCES); do $(INSTALL) $$f $(DESTDIR)$(SHAREDIR)/Yap/pl; done
+	@INSTALL_DLLS@ (cd library/lammpi; $(MAKE) install)
+	@INSTALL_DLLS@ (cd library/matrix; $(MAKE) install)
+	@INSTALL_DLLS@ (cd library/random; $(MAKE) install)
+	@INSTALL_DLLS@ (cd library/regex; $(MAKE) install)
+	@INSTALL_DLLS@ (cd library/rltree; $(MAKE) install)
+	@INSTALL_DLLS@ (cd library/system; $(MAKE) install)
+	@INSTALL_DLLS@ (cd library/tries; $(MAKE) install)
+	@ENABLE_GECODE@ @INSTALL_DLLS@ (cd library/gecode; $(MAKE) install)
+	@ENABLE_CLIB@ @INSTALL_DLLS@ (cd packages/clib; $(MAKE) install)
+	@ENABLE_HTTP@ @INSTALL_DLLS@ (cd packages/http; $(MAKE) install)
+	@ENABLE_HTTP@ @INSTALL_DLLS@ (cd packages/http; $(MAKE) install-examples)
+	@ENABLE_PLDOC@ @INSTALL_DLLS@ (cd packages/pldoc; $(MAKE) install)
+	@ENABLE_PLDOC@ @INSTALL_DLLS@ (cd packages/pldoc; $(MAKE) install-examples)
+	@ENABLE_PLUNIT@ @INSTALL_DLLS@ (cd packages/plunit; $(MAKE) install)
+	@ENABLE_PLUNIT@ @INSTALL_DLLS@ (cd packages/plunit; $(MAKE) install-examples)
+	@ENABLE_R@ @INSTALL_DLLS@ (cd packages/R; $(MAKE) install)
+	@ENABLE_R@ @INSTALL_DLLS@ (cd packages/R; $(MAKE) install-examples)
+	@ENABLE_RDF@ @INSTALL_DLLS@ (cd packages/RDF; $(MAKE) install)
+	@ENABLE_SEMWEB@ @INSTALL_DLLS@ (cd packages/semweb; $(MAKE) install)
+	@ENABLE_SGML@ @INSTALL_DLLS@ (cd packages/sgml; $(MAKE) install)
+	@ENABLE_ZLIB@ @INSTALL_DLLS@ (cd packages/zlib; $(MAKE) @ZLIB_INSTALL@)
+	@ENABLE_LIBARCHIVE@ @INSTALL_DLLS@ (cd packages/archive; $(MAKE) install)
+	@ENABLE_CLPBN_BP@ @INSTALL_DLLS@ (cd packages/CLPBN/horus; $(MAKE) install)
+	@ENABLE_MINISAT@ (cd packages/swi-minisat2/C; $(MAKE) install)
+	@INSTALL_MATLAB@ (cd library/matlab; $(MAKE) install)
+	@ENABLE_REAL@ (cd packages/real; $(MAKE) install)
+	@ENABLE_JPL@ @INSTALL_DLLS@ (cd packages/jpl; $(MAKE) install)
+	#@ENABLE_JPL@ @INSTALL_DLLS@ (cd packages/pyswip; $(MAKE) install)
+	mkdir -p $(DESTDIR)$(INCLUDEDIR)
+	mkdir -p $(DESTDIR)$(INCLUDEDIR)/src
+	$(INSTALL) $(HEADERS) $(DESTDIR)$(INCLUDEDIR)/src
+	for h in $(INTERFACE_HEADERS); do $(INSTALL) $$h $(DESTDIR)$(INCLUDEDIR); done
+	$(INSTALL) config.h $(DESTDIR)$(INCLUDEDIR)/src/config.h
+	$(INSTALL) parms.h $(DESTDIR)$(INCLUDEDIR)/src/parms.h
+	$(INSTALL) YapTermConfig.h $(DESTDIR)$(INCLUDEDIR)
+	@ENABLE_CPLINT@ (cd packages/cplint; $(MAKE) install)
+	@ENABLE_CPLINT@ (cd packages/cplint/approx/simplecuddLPADs; $(MAKE) install)
+	@ENABLE_PRISM@ (cd packages/prism/src/c; $(MAKE) install)
+	@ENABLE_PRISM@ (cd packages/prism/src/prolog; $(MAKE) install)
+	@ENABLE_BDDLIB@ (cd packages/bdd; $(MAKE) install)
+	@ENABLE_CUDD@ (cd packages/ProbLog/simplecudd; $(MAKE) install)
+	@ENABLE_CUDD@ (cd packages/ProbLog/simplecudd_lfi; $(MAKE) install)
+
+
+install_win32: startup.yss @ENABLE_WINCONSOLE@ yap-win@EXEC_SUFFIX@
+	mkdir -p $(DESTDIR)$(BINDIR)
+	mkdir -p $(DESTDIR)$(LIBDIR)
+	mkdir -p $(DESTDIR)$(YAPLIBDIR)
+	mkdir -p $(DESTDIR)$(INCLUDEDIR)
+	$(INSTALL_PROGRAM) -m 755 yap.exe $(DESTDIR)$(BINDIR)/yap.exe
+	$(INSTALL_PROGRAM) -m 755 yap.dll $(DESTDIR)$(BINDIR)/yap.dll
+	@ENABLE_WINCONSOLE@ $(INSTALL_PROGRAM) -m 755 yap-win.exe $(DESTDIR)$(BINDIR)/yap-win.exe
+	@ENABLE_WINCONSOLE@ $(INSTALL_PROGRAM) -m 755 plterm.dll $(DESTDIR)$(BINDIR)/plterm.dll
+	$(INSTALL_PROGRAM) -m 755 @YAPLIB@ $(DESTDIR)$(YAPLIBDIR)/@YAPLIB@
+	$(INSTALL_PROGRAM) -m 755 startup.yss $(DESTDIR)$(YAPLIBDIR)/startup.yss
+	mkdir -p $(DESTDIR)$(SHAREDIR)/Yap
+	mkdir -p $(DESTDIR)$(SHAREDIR)/Yap/pl
+	mkdir -p $(DESTDIR)$(SHAREDIR)/Yap/swi
+	mkdir -p $(DESTDIR)$(DOCSDIR)
+	$(INSTALL) $(srcdir)/Artistic $(DESTDIR)$(DOCSDIR)
+	$(INSTALL) $(srcdir)/README $(DESTDIR)$(DOCSDIR)/README.TXT
+	$(INSTALL) $(srcdir)/COPYING $(DESTDIR)$(DOCSDIR)/COPYING.TXT
+	for f in $(PL_SOURCES); do $(INSTALL) $$f $(DESTDIR)$(SHAREDIR)/Yap/pl; done
+	$(INSTALL) $(HEADERS) $(DESTDIR)$(INCLUDEDIR)
+	for h in $(INTERFACE_HEADERS); do $(INSTALL) $$h $(DESTDIR)$(INCLUDEDIR); done
+	$(INSTALL) config.h $(DESTDIR)$(INCLUDEDIR)/config.h
+	$(INSTALL) parms.h $(DESTDIR)$(INCLUDEDIR)/parms.h
+	(cd library/random; $(MAKE) install)
+	(cd library/matrix; $(MAKE) install)
+	(cd library/regex; $(MAKE) install)
+	(cd library/rltree; $(MAKE) install)
+	(cd library/system; $(MAKE) install)
+	@ENABLE_WINCONSOLE@ (cd LGPL/swi_console; $(MAKE) install)
+	@INSTALL_MATLAB@ (cd library/matlab; $(MAKE) install)
+	@ENABLE_REAL@ (cd packages/real; $(MAKE) install)
+	(cd library/tries; $(MAKE) install)
+	@ENABLE_CLIB@ (cd packages/clib; $(MAKE) install)
+	@ENABLE_PLDOC@ (cd packages/pldoc; $(MAKE) install)
+	@ENABLE_PLDOC@ (cd packages/pldoc; $(MAKE) install-examples)
+	@ENABLE_PLUNIT@ (cd packages/plunit; $(MAKE) install)
+	@ENABLE_PLUNIT@ (cd packages/plunit; $(MAKE) install-examples)
+	@ENABLE_HTTP@ (cd packages/http; $(MAKE) install)
+	@ENABLE_HTTP@ (cd packages/http; $(MAKE) install-examples)
+	@ENABLE_R@ (cd packages/R; $(MAKE) install)
+	@ENABLE_R@ (cd packages/R; $(MAKE) install-examples)
+	@ENABLE_RDF@ (cd packages/RDF; $(MAKE) install)
+	@ENABLE_SEMWEB@ (cd packages/semweb; $(MAKE) install)
+	@ENABLE_SGML@ (cd packages/sgml; $(MAKE) install)
+	@ENABLE_ZLIB@ (cd packages/zlib; $(MAKE) @ZLIB_INSTALL@)
+	(cd packages/CLPBN ; $(MAKE) install)
+	@ENABLE_CLPBN_BP@ (cd packages/CLPBN/horus; $(MAKE) install)
+	@ENABLE_JPL@ (cd packages/jpl ; $(MAKE) install)
+	@ENABLE_MINISAT@ (cd packages/swi-minisat2/C; $(MAKE) install)
+	@ENABLE_CPLINT@ (cd packages/cplint; $(MAKE) install)
+	@ENABLE_PRISM@ (cd packages/prism/src/c; $(MAKE) install)
+	@ENABLE_PRISM@ (cd packages/prism/src/prolog; $(MAKE) install)
+	@ENABLE_BDDLIB@ (cd packages/bdd; $(MAKE) install)
+	@ENABLE_CUDD@ (cd packages/ProbLog/simplecudd; $(MAKE) install)
+	@ENABLE_CUDD@ (cd packages/ProbLog/simplecudd_lfi; $(MAKE) install)
+
+install_library: @YAPLIB@
+	mkdir -p $(DESTDIR)$(INCLUDEDIR)
+	for h in $(HEADERS); do $(INSTALL) $$h $(DESTDIR)$(INCLUDEDIR); done
+
+install_data: install_copied_files install_bin
+	@ENABLE_CHR@ (cd packages/chr ; $(MAKE) install)
+	@ENABLE_CHR@ (cd packages/chr ; $(MAKE) install-examples)
+	@ENABLE_CHR@ (cd packages/clpqr ; $(MAKE) install)
+
+install_copied_files:
+	(cd library ; $(MAKE) install)
+	@ENABLE_MINISAT@ (cd packages/swi-minisat2; $(MAKE) install)
+	(cd LGPL ; $(MAKE) install)
+	(cd GPL ; $(MAKE) install)
+	$(INSTALL_DATA) $(srcdir)/LGPL/pillow/icon_address.pl $(DESTDIR)$(SHAREDIR)/Yap/
+	$(INSTALL_DATA) $(srcdir)/LGPL/pillow/pillow.pl $(DESTDIR)$(SHAREDIR)/Yap/
+	@INSTALLCLP@(cd LGPL/clp ; $(MAKE) install)
+	(cd packages/CLPBN ; $(MAKE) install)
+	(cd packages/meld; $(MAKE) install)
+	(cd packages/xml; $(MAKE) install)
+	(cd  packages/ProbLog ; $(MAKE) install)
+
+##########
+TAGS: $(C_SOURCES) $(PL_SOURCES) $(HEADERS)
+	etags  $(C_SOURCES)  $(PL_SOURCES) $(HEADERS)
+
+depend: $(HEADERS) $(C_SOURCES)
+	-@if test "$(GCC)" = yes; then\
+	  $(CC) -MM $(CFLAGS) -D__YAP_NOT_INSTALLED__=1 -I$(srcdir) -I$(srcdir)/include -I$(srcdir)/os $(C_SOURCES) >> Makefile;\
+	else\
+          makedepend -f - -- $(CFLAGS) -I$(srcdir)/include -- $(C_SOURCES) |\
+          sed 's|.*/\([^:]*\):|\1:|' >> Makefile ;\
+	fi
+
+clean: clean_docs
+	rm -f *.o *~ *.BAK *.a
+	@ENABLE_GECODE@ @INSTALL_DLLS@ (cd library/gecode; $(MAKE) clean)
+	@INSTALL_DLLS@ (cd library/lammpi; $(MAKE) clean)
+	@INSTALL_MATLAB@ (cd library/matlab; $(MAKE) clean)
+	@INSTALL_DLLS@ (cd library/matrix; $(MAKE) clean)
+	@INSTALL_DLLS@ (cd library/random; $(MAKE) clean)
+	@INSTALL_DLLS@ (cd library/regex; $(MAKE) clean)
+	@INSTALL_DLLS@ (cd library/rltree; $(MAKE) clean)
+	@ENABLE_WINCONSOLE@ (cd LGPL/swi_console; $(MAKE) clean)
+	@INSTALL_DLLS@ (cd library/system; $(MAKE) clean)
+	@INSTALL_DLLS@ (cd library/tries; $(MAKE) clean)
+	@ENABLE_CLIB@ @INSTALL_DLLS@ (cd packages/clib; $(MAKE) clean)
+	@ENABLE_HTTP@ @INSTALL_DLLS@ (cd packages/http; $(MAKE) clean)
+	@ENABLE_PLDOC@ @INSTALL_DLLS@ (cd packages/pldoc; $(MAKE) clean)
+	@ENABLE_PLUNIT@ @INSTALL_DLLS@ (cd packages/plunit; $(MAKE) clean)
+	@ENABLE_R@ @INSTALL_DLLS@ (cd packages/R; $(MAKE) clean)
+	@ENABLE_RDF@ @INSTALL_DLLS@ (cd packages/RDF; $(MAKE) clean)
+	@ENABLE_SEMWEB@ @INSTALL_DLLS@ (cd packages/semweb; $(MAKE) clean)
+	@ENABLE_SGML@ @INSTALL_DLLS@ (cd packages/sgml; $(MAKE) clean)
+	@ENABLE_REAL@ (cd packages/real; $(MAKE) clean)
+	@ENABLE_MINISAT@ (cd packages/swi-minisat2; $(MAKE) clean)
+	@ENABLE_CLPBN_BP@ (cd packages/CLPBN/horus; $(MAKE) clean)
+	@ENABLE_ZLIB@ @INSTALL_DLLS@ (cd packages/zlib; $(MAKE) clean)
+	@ENABLE_PRISM@ (cd packages/prism/src/c; $(MAKE) clean)
+	@ENABLE_PRISM@ (cd packages/prism/src/prolog; $(MAKE) clean)
+	@ENABLE_CPLINT@ (cd packages/cplint/approx/simplecuddLPADs; $(MAKE) clean)
+	@ENABLE_CPLINT@ (cd packages/cplint; $(MAKE) clean)
+	@ENABLE_BDDLIB@ (cd packages/bdd; $(MAKE) clean)
+	@ENABLE_CUDD@ (cd packages/ProbLog/simplecudd; $(MAKE) clean)
+	@ENABLE_CUDD@ (cd packages/ProbLog/simplecudd_lfi; $(MAKE) clean)
+	@ENABLE_JPL@ @INSTALL_DLLS@ (cd packages/jpl; $(MAKE) clean)
+
+
+
+realclean: clean realclean_docs
+	rm -f yap@EXEC_SUFFIX@ startup.yss config.log config.cache config.h
+
+dist:
+
+.c.s:
+	$(CC) $(CFLAGS) -S $<
+
+# use my own .def file.
+libWYap.a: yap.dll
+	dlltool --def $(srcdir)/misc/yap.def \
+	--dllname yap.dll \
+	--output-lib libWYap.a
+
+# yap.dll:  libYap.a
+# 	$(CC) $(CFLAGS) -shared -o yap.dll \
+# 	-Wl,--export-all-symbols \
+# 	-Wl,--enable-auto-import \
+# 	-Wl,--whole-archive libYap.a \
+# 	-Wl,--no-whole-archive $(LIBS) $(LDFLAGS)
+
+install_info:
+	$(MAKE) info; \
+	$(INSTALL) yap.info* $(DESTDIR)$(INFODIR); \
+	if test -e $(DESTDIR)$(INFODIR)/emacs.bz2; then \
+	  bzip2 --quiet --force $(DESTDIR)$(INFODIR)/yap.info*; \
+	else \
+	  if test -e $(DESTDIR)$(INFODIR)/emacs.gz; then \
+	  gzip --quiet --force $(DESTDIR)$(INFODIR)/yap.info*; \
+	  fi \
+	fi; \
+	$(INSTALL_INFO) --quiet --section "Programming Languages" yap.info $(DESTDIR)$(INFODIR)/dir; \
+	cd $(srcdir)/LGPL/pillow/doc ; \
+	$(INSTALL) pillow_doc.info $(DESTDIR)$(INFODIR); \
+	if test -e $(DESTDIR)$(INFODIR)/emacs.bz2; then \
+	  bzip2 --quiet --force $(DESTDIR)$(INFODIR)/pillow_doc.info; \
+	else \
+	  if test -e $(DESTDIR)$(INFODIR)/emacs.gz; then \
+	  gzip --quiet --force $(DESTDIR)$(INFODIR)/pillow_doc.info; \
+	  fi \
+	fi; \
+	$(INSTALL_INFO) --quiet --section "Programming Languages" --entry="`cat pillow_doc.infoindex`" --info-dir=$(DESTDIR)$(INFODIR) pillow_doc.info
+
+install_docs:
+	$(MAKE) pdf
+	$(MAKE) html
+	$(INSTALL_DATA) yap.html* $(DESTDIR)$(DOCSDIR)
+	$(INSTALL_DATA) yap.pdf $(DESTDIR)$(DOCSDIR)
+	$(INSTALL_DATA) $(srcdir)/README $(DESTDIR)$(DOCSDIR)
+	$(INSTALL_DATA) $(srcdir)/Artistic $(DESTDIR)$(DOCSDIR)
+	$(INSTALL_DATA) $(srcdir)/COPYING $(DESTDIR)$(DOCSDIR)
+	$(INSTALL_DATA) $(srcdir)/changes4.3.html $(DESTDIR)$(DOCSDIR)
+	$(INSTALL_DATA) $(srcdir)/changes-5.0.html $(DESTDIR)$(DOCSDIR)
+	$(INSTALL_DATA) $(srcdir)/changes-5.1.html $(DESTDIR)$(DOCSDIR)
+	$(INSTALL_DATA) $(srcdir)/changes-6.0.html $(DESTDIR)$(DOCSDIR)
+
+
+info: yap.info
+
+yap.info: $(YAPDOCS)
+	$(MAKEINFO)  $(srcdir)/docs/yap.tex
+
+html: yap.html
+
+yap.html: $(srcdir)/docs/yap.tex
+	$(TEXI2HTML) $(srcdir)/docs/yap.tex
+
+dvi: yap.dvi
+
+yap.dvi: $(YAPDOCS)
+	$(TEXI2DVI) $(srcdir)/docs/yap.tex
+
+ps:	yap.ps
+
+yap.ps:  $(YAPDOCS)
+	dvips -o yap.ps $(srcdir)/docs/yap
+
+pdf: yap.pdf
+
+yap.pdf:  $(YAPDOCS)
+	$(TEXI2PDF) $(srcdir)/docs/yap.tex
+
+clean_docs:
+	rm -f *.aux *.ca *.cas *.cn *.cns *.cp *.cps *.cy *.cys *.dvi *.fn *.fns *.ky *.log *.sa *.sas *.sn *.sns *.sy *.sys *~ *.tp *.vr *.toc *.pg
+
+realclean_docs: clean_docs
+	rm -f yap.ps yap.html yap_toc.html yap.pdf yap.info*
+
+installcheck:
+	@ENABLE_CPLINT@ (cd packages/cplint; $(MAKE) installcheck)
+
+
+# DO NOT DELETE THIS LINE -- make depend depends on it.
+

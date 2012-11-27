@@ -1,0 +1,363 @@
+
+#ifndef YAP_CONFIG_H
+
+#define YAP_CONFIG_H
+
+#include "parms.h"
+
+/* are dynamic arrays supported? */
+#undef HAVE_DYNARRAY
+
+/* are we using gcc */
+#undef HAVE_GCC
+
+/* should we use gcc threaded code (i.e. goto *adrs) */
+#undef USE_THREADED_CODE
+
+/* Should we use lib readline ? 	*/
+#undef HAVE_LIBREADLINE
+
+/* Should we use lib readline ? 	*/
+#undef HAVE_LIBSOCKET
+#undef HAVE_LIBNSL
+
+/* Should we use gmp ? 	*/
+#undef HAVE_LIBGMP
+
+/* What MPI libraries are there? */
+#define HAVE_LIBMPI 0
+#define HAVE_LIBMPICH 
+
+/* Is there an MPE library? */
+#define HAVE_LIBMPE 0
+
+/* does the compiler support inline ? */
+#undef inline
+
+/* Do we have Ansi headers ?		*/
+#undef STDC_HEADERS
+
+/* Host Name ?				*/
+#undef HOST_ALIAS
+
+#undef SUPPORT_CONDOR
+#undef USE_PTHREAD_LOCKING
+
+#undef HAVE_SYS_WAIT_H
+#undef NO_UNION_WAIT
+
+#undef  HAVE_ALLOCA_H
+#undef  HAVE_ARPA_INET_H
+#undef  HAVE_CTYPE_H
+#undef  HAVE_CRYPT_H
+#undef  HAVE_CUDD_H
+#undef  HAVE_CUDDINT_H
+#undef  HAVE_CUDD_CUDD_H
+#undef  HAVE_CUDD_CUDDINT_H
+#undef  HAVE_CUDD_UTIL_H
+#undef  HAVE_DIRECT_H
+#undef  HAVE_DIRENT_H
+#undef  HAVE_DLFCN_H
+#undef  HAVE_ERRNO_H
+#undef  HAVE_EXECINFO_H
+#undef  HAVE_FCNTL_H
+#undef  HAVE_FENV_H
+#undef  HAVE_FLOAT_H
+#undef  HAVE_FPU_CONTROL_H
+#undef  HAVE_GMP_H
+#undef  HAVE_IEEEFP_H
+#undef  HAVE_IO_H
+#undef  HAVE_LIMITS_H
+#undef  HAVE_LOCALE_H
+#undef  HAVE_MACH_O_DYLD_H
+#undef  HAVE_MALLOC_H
+#undef  HAVE_MATH_H
+#undef  HAVE_MEMORY_H
+#undef  HAVE_MPE_H
+#undef  HAVE_MPI_H
+#undef  HAVE_NETDB_H
+#undef  HAVE_NETINET_IN_H
+#undef  HAVE_NETINET_TCP_H
+#undef  HAVE_PTHREAD_H
+#undef  HAVE_PWD_H
+#undef  HAVE_READLINE_READLINE_H
+#undef  HAVE_READLINE_HISTORY_H
+#undef  HAVE_REGEX_H
+#undef  HAVE_RINTERFACE_H
+#undef  HAVE_SIGINFO_H
+#undef  HAVE_SIGNAL_H
+#undef  HAVE_STDARG_H
+#undef  HAVE_STDINT_H
+#undef  HAVE_STRING_H
+#undef  HAVE_STROPTS_H
+#undef  HAVE_SYS_CONF_H
+#undef  HAVE_SYS_DIR_H
+#undef  HAVE_SYS_FILE_H
+#undef  HAVE_SYS_MMAN_H
+#undef  HAVE_SYS_NDIR_H
+#undef  HAVE_SYS_PARAM_H
+#undef  HAVE_SYS_RESOURCE_H
+#undef  HAVE_SYS_SELECT_H
+#undef  HAVE_SYS_SHM_H
+#undef  HAVE_SYS_SOCKET_H
+#undef  HAVE_SYS_STAT_H
+#undef  HAVE_SYS_TIME_H
+#undef  HAVE_SYS_TIMES_H
+#undef  HAVE_SYS_TYPES_H
+#undef  HAVE_SYS_UCONTEXT_H
+#undef  HAVE_SYS_UN_H
+#undef  HAVE_SYS_WAIT_H
+#undef  HAVE_TIME_H
+#undef  HAVE_UNISTD_H
+#undef  HAVE_UTIME_H
+#undef  HAVE_UTIL_H
+#undef  HAVE_WCTYPE_H
+#undef  HAVE_WINSOCK_H
+#undef  HAVE_WINSOCK2_H
+
+#if __MINGW32__
+#define __WINDOWS__ 1
+#endif
+
+/* Do we have restartable syscalls */
+#undef  HAVE_RESTARTABLE_SYSCALLS
+
+/* is 'tms' defined in <sys/time.h> ? */
+#undef  TM_IN_SYS_TIME
+
+/* define type of prt returned by malloc: char or void */
+#undef  MALLOC_T
+
+/* Define byte order			*/
+#undef  WORDS_BIGENDIAN
+
+#include "YapTermConfig.h"
+
+/* Define representation of floats      */
+/* only one of the following shoud be set */
+/* to add a new representation you must edit FloatOfTerm and MkFloatTerm
+  in adtdefs.c
+*/
+#define  FFIEEE 1
+/*manual */
+#undef   FFVAX   
+
+/* Define the standard type of a float argument to a function */
+/*manual */
+#define  FAFloat double	
+
+/* Set the minimum and default heap, trail and stack size */
+#undef MinTrailSpace
+#undef MinStackSpace
+#undef  MinHeapSpace
+
+#undef DefTrailSpace
+#undef DefStackSpace
+#undef  DefHeapSpace
+
+
+/* Define return type for signal	*/
+#undef  RETSIGTYPE
+
+#undef  HAVE__CHSIZE_S
+#undef  HAVE__NSGETENVIRON
+#undef  HAVE_ACCESS
+#undef  HAVE_ACOSH
+#undef  HAVE_ALARM
+#undef  HAVE_ALLOCA
+#undef  HAVE_ASINH
+#undef  HAVE_ATANH
+#undef  HAVE_CHDIR
+#undef  HAVE_CLOCK
+#undef  HAVE_CLOCK_GETTIME
+#undef  HAVE_CTIME
+#undef  HAVE_DLOPEN
+#undef  HAVE_DUP2
+#undef  HAVE_ERF
+#undef  HAVE_FECLEAREXCEPT
+#undef  HAVE_FESETTRAPENABLE
+#undef  HAVE_FETESTEXCEPT
+#undef  HAVE_FGETPOS
+#undef  HAVE_FINITE
+#undef  HAVE_FPCLASS
+#undef  HAVE_FTIME
+#undef  HAVE_GETCWD
+#undef  HAVE_GETENV
+#undef  HAVE_GETHOSTBYNAME
+#undef  HAVE_GETHOSTENT
+#undef  HAVE_GETHOSTID
+#undef  HAVE_GETHOSTNAME
+#undef  HAVE_GETHRTIME
+#undef  HAVE_GETPAGESIZE
+#undef  HAVE_GETPWNAM
+#undef  HAVE_GETRUSAGE
+#undef  HAVE_GETTIMEOFDAY
+#undef  HAVE_GETWD
+#undef  HAVE_ISATTY
+#undef  HAVE_ISINF
+#undef  HAVE_ISNAN
+#undef  HAVE_KILL
+#undef  HAVE_LABS
+#undef  HAVE_LGAMMA
+#undef  HAVE_LINK
+#undef  HAVE_LOCALTIME
+#undef  HAVE_LSTAT
+#undef  HAVE_MALLINFO
+#undef  HAVE_MBSCASECOLL
+#undef  HAVE_MBSCOLL
+#undef  HAVE_MBSNRTOWCS
+#undef  HAVE_MEMCPY
+#undef  HAVE_MEMMOVE
+#undef  HAVE_MKSTEMP
+#undef  HAVE_MKTEMP
+#undef  HAVE_MKTIME
+#undef  HAVE_MMAP
+#undef  HAVE_NANOSLEEP
+#undef  HAVE_NSLINKMODULE
+#undef  HAVE_OPENDIR
+#undef  HAVE_POPEN
+#undef	HAVE_PTHREAD_MUTEXATTR_SETKIND_NP
+#undef	HAVE_PTHREAD_MUTEXATTR_SETTYPE
+#undef  HAVE_PUTENV
+#undef  HAVE_RAND
+#undef  HAVE_RANDOM
+#undef  HAVE_READLINK
+#undef  HAVE_REGEXEC
+#undef  HAVE_RENAME
+#undef  HAVE_RINT
+#undef  HAVE_RL_CLEAR_PENDING_INPUT
+#undef  HAVE_RL_CLEANUP_AFTER_SIGNAL
+#undef  HAVE_RL_COMPLETION_MATCHES
+#undef  HAVE_RL_EVENT_HOOK
+#undef  HAVE_RL_FILENAME_COMPLETION_FUNCTION
+#undef  HAVE_RL_FREE_LINE_STATE
+#undef  HAVE_RL_INSERT_CLOSE
+#undef  HAVE_RL_SET_PROMPT
+#undef  HAVE_RL_STATE_INITIALIZED
+#undef  HAVE_SBRK
+#undef  HAVE_SELECT
+#undef  HAVE_SETBUF
+#undef  HAVE_SETITIMER
+#undef  HAVE_SETLINEBUF
+#undef  HAVE_SETLOCALE
+#undef  HAVE_SETSID
+#undef  HAVE_SHMAT
+#undef  HAVE_SIGACTION
+#undef  HAVE_SIGGETMASK
+#undef  HAVE_SIGINTERRUPT
+#undef  HAVE_SIGNAL
+#undef  HAVE_SIGPROCMASK
+#undef  HAVE_SIGSETJMP
+#undef  HAVE_SLEEP
+#undef  HAVE_SNPRINTF
+#undef  HAVE_SOCKET
+#undef  HAVE_STAT
+#undef  HAVE_STRCHR
+#undef  HAVE_STRERROR
+#undef  HAVE_STRICMP
+#undef  HAVE_STRLWR
+#undef  HAVE_STRNCAT
+#undef  HAVE_STRNCPY
+#undef  HAVE_STRTOD
+#undef  HAVE_SYSTEM
+#undef  HAVE_TIME
+#undef  HAVE_TIMES
+#undef  HAVE_TMPNAM
+#undef  HAVE_TTYNAME
+#undef  HAVE_USLEEP
+#undef  HAVE_VSNPRINTF
+#undef  HAVE_WAITPID
+#undef  HAVE_MPZ_XOR
+
+#if HAVE_GETHOSTNAME==1
+#define HAS_GETHOSTNAME 1
+#endif
+
+#undef  HAVE_SIGINFO
+#undef  HAVE_SIGSEGV
+#undef  HAVE_SIGPROF
+
+#undef  HAVE_ENVIRON
+
+#undef HAVE_VAR_TIMEZONE
+
+#undef HAVE_STRUCT_TIME_TM_GMTOFF
+
+#define  SELECT_TYPE_ARG1    
+#define  SELECT_TYPE_ARG234  
+#define  SELECT_TYPE_ARG5    
+
+#define  TYPE_SELECT_
+#define  MYTYPE(X) MYTYPE1#X
+
+#undef HAVE_VAR_TIMEZONE
+#undef HAVE_STRUCT_TIME_TM_GMTOFF
+
+/* define how to pass the address of a function */
+#define FunAdr(Fn)  Fn
+
+#define  ALIGN_LONGS 1
+#define  LOW_ABSMI 0
+
+#define  MSHIFTOFFS 1
+
+#undef  USE_DL_MALLOC
+#undef  USE_MALLOC
+#undef  USE_SYSTEM_MALLOC
+#define USE_MMAP    (HAVE_MMAP  & !USE_MALLOC & !USE_SYSTEM_MALLOC)
+#define USE_SHM	    (HAVE_SHMAT & !HAVE_MMAP & !USE_MALLOC & !USE_SYSTEM_MALLOC)
+#define USE_SBRK    (HAVE_SBRK  & !HAVE_MMAP & !HAVE_SHMAT & !USE_MALLOC & !USE_SYSTEM_MALLOC)
+
+/* for OSes that do not allow user access to the first
+   quadrant of the memory space */
+#undef FORCE_SECOND_QUADRANT
+
+#if (HAVE_SOCKET || defined(__MINGW32__)) && !defined(SIMICS)
+#define USE_SOCKET 1
+#endif
+
+#if defined(__hpux)
+/* HP-UX requires extra definitions for X/Open networking */
+#undef _XOPEN_SOURCE
+#define _XOPEN_SOURCE_EXTENDED 0
+#endif
+
+#if HAVE_GMP_H && HAVE_LIBGMP
+#define USE_GMP 1
+#endif
+
+/* Should we use MPI ? */
+#if defined(HAVE_MPI_H) && (defined(HAVE_LIBMPI) || defined(HAVE_LIBMPICH))
+ #define HAVE_MPI 1
+#else
+ #define HAVE_MPI 0
+#endif
+
+/* Should we use MPE ? */
+#if defined(HAVE_MPI_H) && HAVE_LIBMPE &&  HAVE_MPI
+ #define HAVE_MPE 1
+#else
+ #define HAVE_MPE 0
+#endif
+
+/* should we avoid realloc() in mpi.c? */
+#define MPI_AVOID_REALLOC 0
+
+/* Is fflush(NULL) clobbering input streams? */
+#undef BROKEN_FFLUSH_NULL
+
+/* sunpro cc */
+#ifdef __SUNPRO_CC
+#ifdef HAVE_GCC
+#undef HAVE_GCC
+#endif
+#endif
+
+#undef GC_NO_TAGS
+
+#undef MAX_WORKERS
+
+#undef MAX_THREADS
+
+#endif /* YAP_CONFIG_H */
+
